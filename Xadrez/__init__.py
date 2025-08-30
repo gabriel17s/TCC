@@ -1,0 +1,4 @@
+from .tabuleiro import Xadrez
+
+
+
