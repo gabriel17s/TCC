@@ -22,5 +22,4 @@ with open(out_path, "w") as out:
                     board.push(move)
                     out.write(board.fen() + "\n")
 
-                # separador entre partidas (opcional)
                 out.write("\n")
