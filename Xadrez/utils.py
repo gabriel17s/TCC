@@ -11,15 +11,18 @@ class Utils:
     def matriz_para_fen(self, tabuleiro=None):
         if tabuleiro is None:
             tabuleiro = self.tabAtual
+
         mapa = {
-            'P':'P','p':'p',
-            'T':'R','t':'r',
-            'C':'N','c':'n',
-            'B':'B','b':'b',
-            'D':'Q','d':'q',
-            'R':'K','r':'k',
-            '.':'.'
+            'P': 'P', 'p': 'p',
+            'T': 'R', 't': 'r',
+            'C': 'N', 'c': 'n',
+            'B': 'B', 'b': 'b',
+            'D': 'Q', 'd': 'q',
+            'R': 'K', 'r': 'k',
+            '.': '.'
         }
+
+        # 1) Monta posição
         fen_rows = []
         for linha in tabuleiro:
             row_fen = ""
@@ -37,6 +40,32 @@ class Utils:
                 row_fen += str(empty)
             fen_rows.append(row_fen)
         fen = "/".join(fen_rows)
+
+        # 2) Turno
         fen += " " + ("w" if self.turno == "brancas" else "b")
-        fen += " - - 0 1"
+
+        roque = ""
+
+        if not any(origem == (7, 4) for origem, _ in self.jogadas):
+            if not any(origem == (7, 7) for origem, _ in self.jogadas):
+                roque += "K"
+            if not any(origem == (7, 0) for origem, _ in self.jogadas):
+                roque += "Q"
+
+
+        if not any(origem == (0, 4) for origem, _ in self.jogadas):
+            if not any(origem == (0, 7) for origem, _ in self.jogadas):
+                roque += "k"
+            if not any(origem == (0, 0) for origem, _ in self.jogadas):
+                roque += "q"
+
+        if not roque:
+            roque = "-"
+
+        fen += " " + roque
+
+        fen += " -"
+
+        fen += " 0 1"
+
         return fen

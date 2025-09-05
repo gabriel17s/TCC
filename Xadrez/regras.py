@@ -1,4 +1,6 @@
 class Regras:
+
+    
     def emXeque(self, cor, tabuleiro=None):
         if tabuleiro is None:
             tabuleiro = self.tabAtual
@@ -260,9 +262,20 @@ class Regras:
 
         return movimentos_validos
             
-
+        #CONVERSÃO
+    def algebraica_para_coords(self, pos):
+        
+        colunas = {'A':0,'B':1,'C':2,'D':3,'E':4,'F':5,'G':6,'H':7}
+        col = colunas[pos[0].upper()]
+        row = 8 - int(pos[1])
+        return (row, col)
 
     def moverPedra(self, origem, destino):
+
+        if isinstance(origem, str):
+            origem = self.algebraica_para_coords(origem)
+        if isinstance(destino, str):
+            destino = self.algebraica_para_coords(destino)
         origem_x, origem_y = origem
         destino_x, destino_y = destino
         pedra = self.tabAtual[origem_x][origem_y]
